@@ -70,7 +70,7 @@ const Home = () => {
 
         <SInput placeholder="단어를 입력해주세요." {...register("word")} />
 
-        <SButton type={"submit"} value={"클릭"} />
+        <SButton type={"submit"}>클릭</SButton>
       </Form>
 
       {isLoading ? (

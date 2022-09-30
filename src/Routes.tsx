@@ -31,7 +31,7 @@ const Routers = () => {
         <Route path={LOGIN_PATH} element={<Login />} />
         <Route path={LOGOUT_PATH} element={<Logout />} />
         <Route
-          path={`${WORDS_PATH}/:page/:sort/:is_known`}
+          path={`${WORDS_PATH}/:page/:sort/:is_known/*`}
           element={<Words />}
         />
       </Routes>

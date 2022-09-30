@@ -50,12 +50,12 @@ const Search = (data: GetIWord) => {
           {isCustom ? (
             <form onSubmit={handleSubmit(onCustomSaveClick)}>
               <SInput {...register("mean")} placeholder="뜻을 수정해주세요." />
-              <SButton value="저장" />
+              <SButton>저장</SButton>
             </form>
           ) : (
             <SButton value="수정" onClick={() => setIsCustom(true)} />
           )}
-          {isCustom ? null : <SButton value="저장" onClick={onSaveClick} />}
+          {isCustom ? null : <SButton onClick={onSaveClick}>저장</SButton>}
         </>
       ) : null}
     </Container>

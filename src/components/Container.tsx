@@ -47,7 +47,6 @@ const Content = styled.div`
   height: 100vh;
   margin-left: 20vw;
   width: 80vw;
-
   display: flex;
   flex-direction: column;
   justify-content: center;

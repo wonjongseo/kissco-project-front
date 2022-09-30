@@ -1,5 +1,5 @@
 import { useQuery } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getCountWord, getWords } from "../api";
 import SButton from "../components/styles/SButton";
@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 import Word from "../components/Word";
 import { useRecoilValue } from "recoil";
 import { userIdVar } from "../atoms";
+import TestPage from "./TestPage";
 
 export const WORDS_PATH = "/words";
 
@@ -32,7 +33,7 @@ const Category = styled.div`
     font-weight: bold;
   }
 `;
-interface IGetWord {
+export interface IGetWord {
   id: number;
   word: string;
   mean: string;
@@ -47,10 +48,9 @@ interface IProps {
 const Words = () => {
   const { is_known, page, sort } = useParams();
 
-  console.log("is_known, page, sort ", is_known, page, sort);
-
   const userId = useRecoilValue(userIdVar);
   const navigator = useNavigate();
+  let suffledWords = [] as IGetWord[];
   const { isLoading, data } = useQuery<IGetWord[]>(
     [`words-${is_known}`, userId],
     () => getWords(+userId!, 1, is_known!, "asc")
@@ -61,10 +61,6 @@ const Words = () => {
     () => getCountWord(+userId!)
   );
 
-  console.log("countIsLoading ", countIsLoading);
-
-  console.log("count ", count);
-
   const onChange = (event: any) => {
     const {
       target: { value },
@@ -72,6 +68,18 @@ const Words = () => {
     navigator(`${WORDS_PATH}/${page}/${sort}/${value}`);
   };
 
+  function shuffle() {
+    data!.sort(() => Math.random() - 0.5);
+  }
+
+  const onTestClick = () => {
+    shuffle();
+    navigator("test", {
+      state: {
+        words: data!.splice(0, 9),
+      },
+    });
+  };
   return (
     <Container>
       {isLoading ? (
@@ -85,7 +93,7 @@ const Words = () => {
                 <option value={"false"}>모름</option>
                 <option value={"true"}>앎</option>
               </SSelect>
-              <SButton value="테스트" />
+              <SButton onClick={onTestClick}>테스트</SButton>
             </div>
             <span>
               {is_known === "all"
@@ -118,6 +126,9 @@ const Words = () => {
           </div>
         </Aaaa>
       )}
+      <Routes>
+        <Route path="test" element={<TestPage />} />
+      </Routes>
     </Container>
   );
 };

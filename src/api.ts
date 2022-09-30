@@ -32,9 +32,7 @@ export const getCountWord = async (userId: number) => {
       isKnown: false,
     },
   });
-
-  console.log(response);
-  console.log(response.data);
+  return response.data;
 };
 
 export const getWords = async (

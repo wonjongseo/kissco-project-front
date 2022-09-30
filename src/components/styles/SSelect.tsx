@@ -7,7 +7,7 @@ const SSelect = styled.select`
   font-size: 15px;
   text-align: center;
   /* width: 80px; */
-  padding: 15px 30px;
+  padding: 8px 16px;
   border-radius: 10px;
 
   &:hover {

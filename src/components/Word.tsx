@@ -15,14 +15,14 @@ export interface GetIWord {
 }
 
 const Form = styled.div`
-  margin-top: 22px;
+  margin-top: 11px;
   display: flex;
   align-items: center;
   /* background-color: red; */
 `;
 
 const SWord = styled.div`
-  font-size: 30px;
+  font-size: 20px;
   margin-right: 10px;
 `;
 
@@ -68,7 +68,7 @@ const Word = (data: GetIWord) => {
         </SSelect>
       )}
 
-      <SButton value="삭제" onClick={onDeleteClick} />
+      <SButton onClick={onDeleteClick}>삭제</SButton>
     </Form>
   );
 };
