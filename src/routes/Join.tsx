@@ -79,6 +79,9 @@ const Join = () => {
             {formState.errors.password && (
               <Error message={formState.errors.password?.message} />
             )}
+            {formState.errors.username && (
+              <Error message={formState.errors.username?.message} />
+            )}
           </>
         )}
         <AuthInput

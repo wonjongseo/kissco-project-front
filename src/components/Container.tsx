@@ -7,11 +7,11 @@ import { LOGIN_PATH } from "../routes/Login";
 import { LOGOUT_PATH } from "../routes/Logout";
 import { WORDS_PATH } from "../routes/Words";
 import { Helmet } from "react-helmet-async";
-const Sidebar = styled.div`
+const Sidebar = styled.div<{ width: number }>`
   position: fixed;
   padding: 0px 10px;
   height: 100vh;
-  width: 20vw;
+  width: ${(p) => (p.width <= 500 ? "0" : "20vw")};
   background-color: #a5f1e9;
   display: flex;
   flex-direction: column;
@@ -43,10 +43,12 @@ const NavButton = styled.span<{ width: number }>`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.div<{ width: number }>`
   height: 100vh;
-  margin-left: 20vw;
-  width: 80vw;
+  /* margin-left: 20vw; */
+  margin-left: ${(p) => (p.width <= 500 ? "5vw" : "20vw")};
+  /* width: 80vw; */
+  /* width: ${(p) => (p.width <= 500 ? "98vw" : "80vw")}; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,6 +62,7 @@ interface IChildren {
 const Container = ({ children, title }: IChildren) => {
   const width = useRecoilValue(windowWidthVar);
   const userId = useRecoilValue(userIdVar);
+  console.log(width);
 
   const onDownloadClick = () => {
     window.location.href = `http://localhost:8080/api/vocas/download/${userId}`;
@@ -70,7 +73,7 @@ const Container = ({ children, title }: IChildren) => {
       <Helmet>
         <title>{title}</title>
       </Helmet>
-      <Sidebar>
+      <Sidebar width={width}>
         <Title width={width}>
           <Link to={"/"}>이지단어</Link>
         </Title>
@@ -100,7 +103,7 @@ const Container = ({ children, title }: IChildren) => {
           </>
         )}
       </Sidebar>
-      <Content>
+      <Content width={width}>
         <>{children}</>
       </Content>
     </>
