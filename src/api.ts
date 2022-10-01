@@ -1,6 +1,6 @@
 import axios from "axios";
-// export const BASE_URL = "https://kissco-dic.herokuapp.com";
-export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "https://kissco-dic.herokuapp.com";
+// export const BASE_URL = "http://localhost:8080";
 
 export const printLog = (url: string, method: string, name: string) => {
   // console.log(`${method.toUpperCase()}  : ${url} :: ${name}`);

@@ -48,7 +48,6 @@ const MeanBox = styled.div`
 
 const ContinueBox = styled.div`
   display: flex;
-  /* justify-content: space-around; */
   flex-direction: column;
   width: 100%;
   align-items: center;
@@ -59,7 +58,6 @@ const ReTryBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  //background-color: red;
 
   width: 100%;
   height: 100%;
@@ -68,7 +66,6 @@ const ReTryBox = styled.div`
 const WrongWordBox = styled.ul`
   font-size: 20px;
   height: 100%;
-  /* background-color: red; */
   h1 {
     font-size: 40px;
     margin: 100px 0px 50px 0px;
@@ -82,7 +79,6 @@ const WrongWordBox = styled.ul`
     font-size: 20px;
     display: flex;
     align-items: center;
-    /* background-color: red; */
   }
 `;
 
