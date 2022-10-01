@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { postJoin } from "../api/auth_api";
 import AuthButton from "../components/auth/AuthBotton";
@@ -23,6 +24,7 @@ export interface IJoinForm {
 }
 
 const Join = () => {
+  const nav = useNavigate();
   const { register, handleSubmit, formState, setError, setFocus } =
     useForm<IJoinForm>({
       // mode: "onBlur",
@@ -46,7 +48,8 @@ const Join = () => {
     }
     try {
       const data = await postJoin(inputs);
-      console.log(data);
+
+      nav("/");
     } catch (e: any) {
       setError("email", {
         message: "이메일이 이미 존재합니다.",
@@ -55,7 +58,7 @@ const Join = () => {
     }
   };
   return (
-    <Container>
+    <Container title="Join">
       <Title>회원가입</Title>
       <AuthForm onSubmit={handleSubmit(onValid)}>
         {formState.errors && (

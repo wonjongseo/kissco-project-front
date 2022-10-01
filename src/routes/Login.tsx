@@ -58,7 +58,7 @@ const Login = () => {
     }
   };
   return (
-    <Container>
+    <Container title="Login">
       <Title>로그인</Title>
 
       <AuthForm onSubmit={handleSubmit(onValid)}>

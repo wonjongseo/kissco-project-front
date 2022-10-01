@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { searchWord } from "../api";
-import { windowWidthVar } from "../atoms";
 import SButton from "../components/styles/SButton";
 import SInput from "../components/styles/SInput";
 import Container from "../components/Container";
 import Select from "../components/styles/SSelect";
 import Loading from "../components/Loading";
 import Search from "../components/Search";
-
-import Word from "../components/Word";
+import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
 
 interface InputedWord {
@@ -65,7 +62,7 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
+    <Container title="Home">
       <Title>단어 검색</Title>
       <Form onSubmit={handleSubmit(onValid)}>
         <Select {...register("source")}>

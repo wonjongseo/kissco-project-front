@@ -138,7 +138,7 @@ const Words = () => {
   };
 
   return (
-    <Container>
+    <Container title="Words">
       {isLoading ? (
         <Loading text="Loading..." />
       ) : (

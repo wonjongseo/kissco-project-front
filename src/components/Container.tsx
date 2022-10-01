@@ -6,7 +6,7 @@ import { JOIN_PATH } from "../routes/Join";
 import { LOGIN_PATH } from "../routes/Login";
 import { LOGOUT_PATH } from "../routes/Logout";
 import { WORDS_PATH } from "../routes/Words";
-
+import { Helmet } from "react-helmet-async";
 const Sidebar = styled.div`
   position: fixed;
   padding: 0px 10px;
@@ -55,8 +55,9 @@ const Content = styled.div`
 
 interface IChildren {
   children: React.ReactNode;
+  title: string;
 }
-const Container = ({ children }: IChildren) => {
+const Container = ({ children, title }: IChildren) => {
   const width = useRecoilValue(windowWidthVar);
   const userId = useRecoilValue(userIdVar);
 
@@ -66,6 +67,9 @@ const Container = ({ children }: IChildren) => {
 
   return (
     <>
+      <Helmet>
+        <title>{title}</title>
+      </Helmet>
       <Sidebar>
         <Title width={width}>
           <Link to={"/"}>이지단어</Link>
