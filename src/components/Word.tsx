@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { changeIsKnown, deleteVoca } from "../api";
 import SButton from "./styles/SButton";
 import SSelect from "./styles/SSelect";
+import SWord from "./styles/SWord";
 
 export interface GetIWord {
   word: string;
@@ -21,28 +22,21 @@ const Form = styled.div`
   /* background-color: red; */
 `;
 
-const SWord = styled.div`
-  font-size: 20px;
-  margin-right: 10px;
-`;
-
 const Word = (data: GetIWord) => {
   const nav = useNavigate();
+
   const { pathname } = useLocation();
+
   const onIsKnownChange = async (event: any) => {
     const {
       target: { value },
     } = event;
-
-    console.log(value);
 
     await changeIsKnown(data.id, value);
 
     nav(0);
   };
   const onDeleteClick = async () => {
-    console.log(data.id);
-
     await deleteVoca(data.id, 1);
     nav(0);
   };
@@ -50,7 +44,8 @@ const Word = (data: GetIWord) => {
   return (
     <Form>
       <SWord>
-        {data.word} {data.mean}
+        <div>{data.word}</div>
+        <div>{data.mean}</div>
       </SWord>
       {pathname === "/" ? null : (
         <SSelect onChange={onIsKnownChange}>

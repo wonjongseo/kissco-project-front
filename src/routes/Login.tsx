@@ -54,6 +54,7 @@ const Login = () => {
     } catch (e: any) {
       console.log(e.response.data.message);
       setError("result", { message: e.response.data.message });
+      nav(0);
     }
   };
   return (

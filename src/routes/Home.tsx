@@ -12,6 +12,7 @@ import Loading from "../components/Loading";
 import Search from "../components/Search";
 
 import Word from "../components/Word";
+import { useEffect } from "react";
 
 interface InputedWord {
   word: string;
@@ -42,7 +43,7 @@ const Home = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit } = useForm<ISearch>();
+  const { register, handleSubmit, setFocus } = useForm<ISearch>();
 
   const onValid = async (data: ISearch) => {
     console.log(data);
@@ -59,6 +60,10 @@ const Home = () => {
     setIsLoading(false);
   };
 
+  useEffect(() => {
+    setFocus("word");
+  }, []);
+
   return (
     <Container>
       <Title>단어 검색</Title>
@@ -70,7 +75,7 @@ const Home = () => {
 
         <SInput placeholder="단어를 입력해주세요." {...register("word")} />
 
-        <SButton type={"submit"}>클릭</SButton>
+        <SButton type={"submit"}>찾기</SButton>
       </Form>
 
       {isLoading ? (

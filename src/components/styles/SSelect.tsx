@@ -7,9 +7,9 @@ const SSelect = styled.select`
   font-size: 15px;
   text-align: center;
   /* width: 80px; */
-  padding: 8px 16px;
+  padding: 7px 14px;
   border-radius: 10px;
-
+  box-shadow: 1px 1px 1px;
   &:hover {
     cursor: pointer;
   }

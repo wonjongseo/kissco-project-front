@@ -65,7 +65,7 @@ const shuffle = (array) => {
 };
 
 const mean = new Array(4);
-const suffle = () => {
+const createSelection = () => {
   const correctIndex = Math.floor(Math.random() * 4);
 
   mean[correctIndex] = words[correctIndex].word;
@@ -79,9 +79,7 @@ const suffle = () => {
       i--;
     }
   }
-
-  console.log(mean);
 };
 
 shuffle(words);
-suffle();
+createSelection();

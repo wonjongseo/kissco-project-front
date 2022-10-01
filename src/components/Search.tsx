@@ -7,6 +7,7 @@ import { addCustomVoca, addVoca } from "../api";
 import { userIdVar } from "../atoms";
 import SButton from "./styles/SButton";
 import SInput from "./styles/SInput";
+import SWord from "./styles/SWord";
 import { GetIWord } from "./Word";
 
 const Container = styled.div`
@@ -15,24 +16,17 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const SWord = styled.div`
-  font-size: 30px;
-  margin-right: 10px;
-`;
-
 const Search = (data: GetIWord) => {
   const userId = useRecoilValue(userIdVar);
 
   const nav = useNavigate();
   const [isCustom, setIsCustom] = useState(false);
   const { register, handleSubmit } = useForm<{ mean: string }>();
+
   const onSaveClick = async () => {
-    const response = await addVoca(+userId!, data.word, data.mean, data.source);
-    console.log(response);
+    await addVoca(+userId!, data.word, data.mean, data.source);
     nav(0);
   };
-  console.log("data.known  ", data.known);
-
   const onCustomSaveClick = async ({ mean }: any) => {
     await addCustomVoca(+userId!, data.word, mean);
 
@@ -53,7 +47,7 @@ const Search = (data: GetIWord) => {
               <SButton>저장</SButton>
             </form>
           ) : (
-            <SButton value="수정" onClick={() => setIsCustom(true)} />
+            <SButton onClick={() => setIsCustom(true)}>수정</SButton>
           )}
           {isCustom ? null : <SButton onClick={onSaveClick}>저장</SButton>}
         </>

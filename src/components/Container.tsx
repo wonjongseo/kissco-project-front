@@ -35,7 +35,7 @@ const Seperator = styled.div`
 
 const NavButton = styled.span<{ width: number }>`
   margin-bottom: ${(p) => (p.width > 1000 ? "80px" : "50px")};
-  font-weight: ${(p) => (p.width > 1000 ? "600" : "500")};
+  font-weight: ${(p) => (p.width > 1000 ? "600" : "700")};
   font-size: ${(p) => (p.width > 1000 ? "28px" : "17px")};
 
   &:hover {
@@ -61,7 +61,7 @@ const Container = ({ children }: IChildren) => {
   const userId = useRecoilValue(userIdVar);
 
   const onDownloadClick = () => {
-    window.location.href = `http://localhost:8080/api/vocas/download/${1}`;
+    window.location.href = `http://localhost:8080/api/vocas/download/${userId}`;
   };
 
   return (
