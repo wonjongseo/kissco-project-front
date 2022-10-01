@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { render } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { changeIsKnown, deleteVoca } from "../api";
+import { userIdVar } from "../atoms";
 import SButton from "./styles/SButton";
 import SSelect from "./styles/SSelect";
 import SWord from "./styles/SWord";
@@ -24,6 +26,7 @@ const Form = styled.div`
 
 const Word = (data: GetIWord) => {
   const nav = useNavigate();
+  const userId = useRecoilValue(userIdVar);
 
   const { pathname } = useLocation();
 
@@ -32,12 +35,12 @@ const Word = (data: GetIWord) => {
       target: { value },
     } = event;
 
-    await changeIsKnown(data.id, value);
+    await changeIsKnown(data.id, +userId!, value);
 
     nav(0);
   };
   const onDeleteClick = async () => {
-    await deleteVoca(data.id, 1);
+    await deleteVoca(data.id, +userId!);
     nav(0);
   };
 

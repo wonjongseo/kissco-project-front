@@ -21,7 +21,7 @@ const Container = styled.div`
 const Button = styled(SButton)`
   margin-left: -10px;
   margin-right: 15px;
-  width: 80px;
+  width: 120px;
   margin-top: 15px;
   height: 40px;
 `;
@@ -41,7 +41,7 @@ const Question = styled.div`
 
 const MeanBox = styled.div`
   display: grid;
-  grid-column-gap: 40px;
+  grid-column-gap: 100px;
   grid-template-columns: repeat(2, 50px);
   grid-template-rows: repeat(2, 50px);
 `;
@@ -63,16 +63,6 @@ const ReTryBox = styled.div`
 
   width: 100%;
   height: 100%;
-`;
-
-const YesBox = styled.div`
-  font-size: 50px;
-  color: tomato;
-  margin-left: 20px;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const WrongWordBox = styled.ul`

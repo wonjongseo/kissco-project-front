@@ -1,6 +1,6 @@
 import axios from "axios";
-export const BASE_URL = "https://kissco-dic.herokuapp.com";
-// export const BASE_URL = "http://localhost:8080";
+// export const BASE_URL = "https://kissco-dic.herokuapp.com";
+export const BASE_URL = "http://localhost:8080";
 
 export const printLog = (url: string, method: string, name: string) => {
   // console.log(`${method.toUpperCase()}  : ${url} :: ${name}`);
@@ -103,8 +103,12 @@ export const deleteVoca = async (vocaId: number, userId: number) => {
   return response.data;
 };
 
-export const changeIsKnown = async (vocaId: number, isKnown: boolean) => {
-  const new_url = `${BASE_URL}/api/users/vocas/${vocaId}/1?isKnown=${isKnown}`;
+export const changeIsKnown = async (
+  vocaId: number,
+  userId: number,
+  isKnown: boolean
+) => {
+  const new_url = `${BASE_URL}/api/users/vocas/${vocaId}/${userId}?isKnown=${isKnown}`;
   // printLog(new_url, "post", "changeIsKnown");
   const response = await axios.post(new_url);
 
