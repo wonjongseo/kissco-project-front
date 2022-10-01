@@ -9,6 +9,7 @@ import AuthInput from "../components/auth/AuthInput";
 
 import Container from "../components/Container";
 import Error from "../components/Error";
+import { LOGIN_PATH } from "./Login";
 
 export const JOIN_PATH = "/join";
 const Title = styled.h1`
@@ -48,8 +49,14 @@ const Join = () => {
     }
     try {
       const data = await postJoin(inputs);
+      console.log(data);
 
-      nav("/");
+      nav(LOGIN_PATH, {
+        state: {
+          email: inputs.email,
+          password: inputs.password,
+        },
+      });
     } catch (e: any) {
       setError("email", {
         message: "이메일이 이미 존재합니다.",
@@ -78,8 +85,8 @@ const Join = () => {
           {...register("email", {
             required: "이메일을 입력해주세요",
             minLength: {
-              value: 6,
-              message: "이메일을 6글자 이상 입력 해주십시오.",
+              value: 5,
+              message: "이메일을 5글자 이상 입력 해주십시오.",
             },
           })}
           placeholder="email"

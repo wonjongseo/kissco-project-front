@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { userIdVar } from "../atoms";
@@ -24,20 +24,20 @@ export interface ILoginForm {
   result?: string;
 }
 
-interface IaxiosError {
-  response: {
-    data: {
-      time: string;
-      status: number;
-      error: string;
-      message: string;
-    };
-  };
+interface IState {
+  email?: string;
+  password?: string;
 }
 const Login = () => {
+  const { state } = useLocation();
+  console.log(state);
+
   const { register, handleSubmit, setError, formState, setFocus } =
-    useForm<ILoginForm>();
+    useForm<ILoginForm>({
+      defaultValues: { email: state?.email, password: state?.password },
+    });
   const nav = useNavigate();
+
   const setUserId = useSetRecoilState(userIdVar);
 
   useEffect(() => {
