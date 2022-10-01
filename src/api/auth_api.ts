@@ -1,12 +1,10 @@
-import { BASE_URL, printLog } from "../api";
+import { BASE_URL } from "../api";
 import axios from "axios";
 import { IJoinForm } from "../routes/Join";
 import { ILoginForm } from "../routes/Login";
 
 export const postLogin = async ({ email, password }: ILoginForm) => {
   const new_url = `${BASE_URL}/api/login`;
-
-  printLog(new_url, "post", "login");
 
   const response = await axios.post(new_url, {
     email,
