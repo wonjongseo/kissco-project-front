@@ -19,7 +19,7 @@ const Container = styled.div`
 `;
 
 const Button = styled(SButton)`
-  margin-left: -10px;
+  margin-left: -30px;
   margin-right: 15px;
   width: 120px;
   margin-top: 15px;
@@ -30,6 +30,7 @@ const InnerContainer = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
+
   align-items: center;
   flex-direction: column;
   justify-content: center;
@@ -58,7 +59,6 @@ const ReTryBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
   width: 100%;
   height: 100%;
 `;
