@@ -5,33 +5,34 @@ import { searchWord } from "../api";
 import SButton from "../components/styles/SButton";
 import SInput from "../components/styles/SInput";
 import Container from "../components/Container";
-import Select from "../components/styles/SSelect";
+import SSelect from "../components/styles/SSelect";
 import Loading from "../components/Loading";
 import Search from "../components/Search";
 import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
+import STitle from "../components/styles/STitle";
 
 interface InputedWord {
   word: string;
   mean: string;
   source: string;
 }
-const Aaaaaaa = styled.div`
-  margin-top: 400px;
-`;
+
 const Form = styled.form`
-  height: 50px;
+  display: flex;
+  align-items: center;
   margin-top: 30px;
 `;
-const Title = styled.h1`
-  font-size: 38px;
-  font-weight: 700;
-`;
+
 interface ISearch {
   source: string;
   word: string;
 }
 
+const Aaaaa = styled.div`
+  height: 50vw;
+  background-color: red;
+`;
 const Home = () => {
   const [word, setWord] = useState<InputedWord>({
     word: "",
@@ -40,10 +41,13 @@ const Home = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit, setFocus } = useForm<ISearch>();
+  const { register, handleSubmit, setFocus, setValue } = useForm<ISearch>();
 
   const onValid = async (data: ISearch) => {
-    console.log(data);
+    if (data.word.length === 0) {
+      setFocus("word");
+      return;
+    }
 
     setIsLoading(true);
 
@@ -55,6 +59,8 @@ const Home = () => {
     });
 
     setIsLoading(false);
+    setValue("word", "");
+    setFocus("word");
   };
 
   useEffect(() => {
@@ -63,12 +69,12 @@ const Home = () => {
 
   return (
     <Container title="Home">
-      <Title>단어 검색</Title>
+      <STitle>단어 검색</STitle>
       <Form onSubmit={handleSubmit(onValid)}>
-        <Select {...register("source")}>
+        <SSelect {...register("source")}>
           <option value={"ko"}>한국어</option>
           <option value={"ja"}>일본어</option>
-        </Select>
+        </SSelect>
 
         <SInput placeholder="단어를 입력해주세요." {...register("word")} />
 
@@ -80,7 +86,7 @@ const Home = () => {
       ) : word.word === "" ? null : (
         <Search {...word} known={"false"} id={0} />
       )}
-      <Aaaaaaa />
+      <Aaaaa />
     </Container>
   );
 };

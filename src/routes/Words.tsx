@@ -13,6 +13,8 @@ import { userIdVar } from "../atoms";
 import TestPage from "./TestPage";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import STitle from "../components/styles/STitle";
+import { useEffect } from "react";
 
 export const WORDS_PATH = "/words";
 
@@ -82,6 +84,14 @@ const Words = () => {
     () => getWords(+userId!, +page!, is_known!, "asc")
   );
 
+  const getVocaCnt = async () => {
+    // const cnt = await getCountWord(+userId!, is_known);
+    // console.log(cnt);
+  };
+  useEffect(() => {
+    getVocaCnt();
+  }, []);
+
   const onChange = (event: any) => {
     const {
       target: { value },
@@ -107,8 +117,6 @@ const Words = () => {
     nav(`${WORDS_PATH}/${+page! - 1}/${sort}/${is_known}`, { replace: true });
   };
   const onTestClick = (formData: ITestForm) => {
-    console.log(formData);
-
     const { count, target } = formData;
 
     var tmp = data;
@@ -181,17 +189,18 @@ const Words = () => {
                 <SButton onClick={onQustionForTestClick}>테스트</SButton>
               ) : null}
             </div>
-            <span>
+            <STitle>
               {is_known === "all"
                 ? "모든 단어"
                 : is_known === "false"
                 ? "모르는 단어"
                 : "아는 단어"}
-            </span>
-            <Form>
+            </STitle>
+            {/* <Form>
               <SInput placeholder="저장된 단어를 검색하시오" />
               <SButton>검색</SButton>
-            </Form>
+            </Form> */}
+            <div></div>
           </Category>
 
           <div>

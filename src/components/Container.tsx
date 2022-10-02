@@ -7,11 +7,17 @@ import { LOGIN_PATH } from "../routes/Login";
 import { LOGOUT_PATH } from "../routes/Logout";
 import { WORDS_PATH } from "../routes/Words";
 import { Helmet } from "react-helmet-async";
+import { BASE_URL } from "../api";
+const SContainer = styled.div`
+  height: 100vw;
+
+  /* background-color: blue; */
+`;
 const Sidebar = styled.div<{ width: number }>`
   position: fixed;
   padding: 0px 10px;
   height: 100vh;
-  width: ${(p) => (p.width <= 500 ? "0" : "20vw")};
+  width: ${(p) => (p.width <= 610 ? "0" : "20vw")};
   background-color: #a5f1e9;
   display: flex;
   flex-direction: column;
@@ -45,10 +51,7 @@ const NavButton = styled.span<{ width: number }>`
 
 const Content = styled.div<{ width: number }>`
   height: 100vh;
-  /* margin-left: 20vw; */
-  margin-left: ${(p) => (p.width <= 500 ? "5vw" : "20vw")};
-  /* width: 80vw; */
-  /* width: ${(p) => (p.width <= 500 ? "98vw" : "80vw")}; */
+  margin-left: ${(p) => (p.width <= 610 ? "5vw" : "20vw")};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,14 +65,13 @@ interface IChildren {
 const Container = ({ children, title }: IChildren) => {
   const width = useRecoilValue(windowWidthVar);
   const userId = useRecoilValue(userIdVar);
-  console.log(width);
 
   const onDownloadClick = () => {
-    window.location.href = `http://localhost:8080/api/vocas/download/${userId}`;
+    window.location.href = `${BASE_URL}/api/vocas/download/${userId}`;
   };
 
   return (
-    <>
+    <SContainer>
       <Helmet>
         <title>{title}</title>
       </Helmet>
@@ -106,7 +108,7 @@ const Container = ({ children, title }: IChildren) => {
       <Content width={width}>
         <>{children}</>
       </Content>
-    </>
+    </SContainer>
   );
 };
 

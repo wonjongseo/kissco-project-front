@@ -9,20 +9,6 @@ import Logout, { LOGOUT_PATH } from "./routes/Logout";
 import Words, { WORDS_PATH } from "./routes/Words";
 
 const Routers = () => {
-  const setWidth = useSetRecoilState(windowWidthVar);
-  // const [width, setWidth] = useState(window.innerWidth);
-
-  const handleResize = () => {
-    setWidth(window.innerWidth);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  });
   return (
     <BrowserRouter>
       <Routes>

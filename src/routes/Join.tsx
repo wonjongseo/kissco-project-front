@@ -58,7 +58,7 @@ const Join = () => {
         },
       });
     } catch (e: any) {
-      setError("email", {
+      return setError("email", {
         message: "이메일이 이미 존재합니다.",
         type: "focus",
       });
@@ -108,7 +108,7 @@ const Join = () => {
         <AuthInput
           type={"password"}
           {...register("password2")}
-          placeholder="check"
+          placeholder="check password"
         />
         <AuthInput
           {...register("username", {

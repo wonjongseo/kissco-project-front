@@ -7,7 +7,7 @@ export const isLoginVar = atom({
 
 export const windowWidthVar = atom({
   key: "window_width",
-  default: window.innerWidth,
+  default: window.innerWidth || 1000,
 });
 
 export const userIdVar = atom({

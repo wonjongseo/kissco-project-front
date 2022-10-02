@@ -1,6 +1,6 @@
 import axios from "axios";
-export const BASE_URL = "https://kissco-dic.herokuapp.com";
-// export const BASE_URL = "http://localhost:8080";
+// export const BASE_URL = "https://kissco-dic.herokuapp.com";
+export const BASE_URL = "http://localhost:8080";
 
 export const searchWord = async (source: string, word: string) => {
   const new_url = `${BASE_URL}/api/vocas`;
@@ -15,7 +15,7 @@ export const searchWord = async (source: string, word: string) => {
   return response.data;
 };
 
-export const getCountWord = async (userId: number) => {
+export const getCountWord = async (userId: number, isKnown: boolean) => {
   const new_url = `${BASE_URL}/api/users/vocas/cnt/${userId}`;
 
   const response = await axios.get(new_url, {

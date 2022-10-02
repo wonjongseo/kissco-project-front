@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { userIdVar } from "../atoms";
 import { postLogin } from "../api/auth_api";
@@ -30,12 +30,12 @@ interface IState {
 }
 const Login = () => {
   const { state } = useLocation();
-  console.log(state);
 
-  const { register, handleSubmit, setError, formState, setFocus } =
+  const { register, handleSubmit, setError, formState, setFocus, getValues } =
     useForm<ILoginForm>({
       defaultValues: { email: state?.email, password: state?.password },
     });
+
   const nav = useNavigate();
 
   const setUserId = useSetRecoilState(userIdVar);
@@ -52,16 +52,37 @@ const Login = () => {
       setUserId(data.id);
       nav("/");
     } catch (e: any) {
-      console.log(e.response.data.message);
       setError("result", { message: e.response.data.message });
-      nav(0);
+      setFocus("password");
+
+      return;
     }
   };
+
+  const onInvalid = async (e: any) => {
+    try {
+      const { email, password } = getValues();
+
+      console.log(email, password);
+
+      const response = await postLogin({ email, password });
+      const data = response.data;
+      sessionStorage.setItem("userId", data.id);
+      setUserId(data.id);
+      nav("/");
+    } catch (e: any) {
+      setError("result", { message: e.response.data.message });
+      setFocus("password");
+
+      return;
+    }
+  };
+
   return (
     <Container title="Login">
       <Title>로그인</Title>
 
-      <AuthForm onSubmit={handleSubmit(onValid)}>
+      <AuthForm onSubmit={handleSubmit(onValid, onInvalid)}>
         {formState.errors.result && (
           <Error message={formState.errors.result?.message} />
         )}

@@ -5,8 +5,8 @@ const SButton = styled.button`
   background-color: #a5f1e9;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  padding: 8px 16px;
-  font-size: 15px;
+  font-size: ${(p) => p.theme.button_font_size};
+  padding: ${(p) => p.theme.button_padding};
   box-shadow: 1px 1px 1px;
   &:hover {
     cursor: pointer;
