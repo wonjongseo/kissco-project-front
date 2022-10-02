@@ -5,7 +5,7 @@ const SWord = styled.div`
 
   font-size: 20px;
   div {
-    width: 100px;
+    width: 130px;
   }
 `;
 export default SWord;

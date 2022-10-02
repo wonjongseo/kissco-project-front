@@ -76,10 +76,12 @@ export interface IGetWord {
   known: boolean;
 }
 
-interface ITestForm {
-  count: number;
-  target: string;
-}
+const WordsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const Words = () => {
   const { is_known, page, sort } = useParams();
 
@@ -106,11 +108,11 @@ const Words = () => {
           {data!.length === 0 ? (
             <Loading text="저장되어 있는 단어가 없습니다" />
           ) : (
-            <div>
+            <WordsContainer>
               {data!.map((word, index) => (
                 <Word {...word} known={"" + word.known} key={index} />
               ))}
-            </div>
+            </WordsContainer>
           )}
           <PageNav>
             {Array.from(Array(Math.floor((count - 1) / 10) + 1), (e, i) => (

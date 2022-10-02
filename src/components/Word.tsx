@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { render } from "react-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { changeIsKnown, deleteVoca } from "../api";
@@ -18,6 +18,7 @@ export interface GetIWord {
 
 const WordContainer = styled.div`
   padding-bottom: 25px;
+
   display: flex;
   align-items: center;
 `;
@@ -25,20 +26,23 @@ const WordContainer = styled.div`
 const Word = (data: GetIWord) => {
   const nav = useNavigate();
   const userId = useRecoilValue(userIdVar);
-
-  const { pathname } = useLocation();
+  const params = useParams();
 
   const onIsKnownChange = async (event: any) => {
     const {
       target: { value },
     } = event;
 
-    await changeIsKnown(data.id, +userId!, value);
+    if (value === "delete") {
+      await deleteVoca(data.id, +userId!);
+    } else {
+      if (params.is_known === "all") {
+        await changeIsKnown(data.id, +userId!, value);
+        return;
+      }
 
-    nav(0);
-  };
-  const onDeleteClick = async () => {
-    await deleteVoca(data.id, +userId!);
+      await changeIsKnown(data.id, +userId!, value);
+    }
     nav(0);
   };
 
@@ -48,23 +52,21 @@ const Word = (data: GetIWord) => {
         <div>{data.word}</div>
         <div>{data.mean}</div>
       </SWord>
-      {pathname === "/" ? null : (
-        <SSelect onChange={onIsKnownChange}>
-          {data.known === "false" ? (
-            <>
-              <option value={"false"}>모름</option>
-              <option value={"true"}>앎</option>
-            </>
-          ) : (
-            <>
-              <option value={"true"}>앎</option>
-              <option value={"false"}>모름</option>
-            </>
-          )}
-        </SSelect>
-      )}
-
-      <SButton onClick={onDeleteClick}>삭제</SButton>
+      <SSelect onChange={onIsKnownChange}>
+        {data.known === "false" ? (
+          <>
+            <option value={"false"}>모름</option>
+            <option value={"true"}>앎</option>
+            <option value={"delete"}>삭제</option>
+          </>
+        ) : (
+          <>
+            <option value={"true"}>앎</option>
+            <option value={"false"}>모름</option>
+            <option value={"delete"}>삭제</option>
+          </>
+        )}
+      </SSelect>
     </WordContainer>
   );
 };

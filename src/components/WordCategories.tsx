@@ -47,11 +47,13 @@ const WordCategories = ({ data }: IProps) => {
       target: { value },
     } = event;
 
+    console.log(value);
+
     nav(`${WORDS_PATH}/1/${sort}/${value}`);
   };
 
   function shuffle(array: IGetWord[]) {
-    const newArray = array;
+    const newArray = array.slice();
     newArray.sort(() => Math.random() - 0.5);
 
     return newArray;
@@ -62,26 +64,12 @@ const WordCategories = ({ data }: IProps) => {
     const shuffledWords = shuffle(data!);
     const newWords = shuffledWords!.slice(0, count);
 
-    if (target === "한국어") {
-      for (var i = 0; i < newWords.length; i++) {
-        const tmp = newWords[i].word;
-        newWords[i].word = newWords[i].mean;
-        newWords[i].mean = tmp;
-      }
-      nav("test", {
-        state: {
-          words: newWords,
-          target,
-        },
-      });
-    } else {
-      nav("test", {
-        state: {
-          words: newWords,
-          target,
-        },
-      });
-    }
+    nav("test", {
+      state: {
+        words: newWords,
+        target,
+      },
+    });
   };
   return (
     <Category>
@@ -109,13 +97,6 @@ const WordCategories = ({ data }: IProps) => {
               ))}
             </SSelect>
 
-            <SSelect defaultValue={"언어"} {...register("target")}>
-              <option disabled value={"언어"}>
-                언어
-              </option>
-              <option value={"일본어"}>일본어</option>
-              <option value={"한국어"}>한국어</option>
-            </SSelect>
             <SButton>테스트 시작</SButton>
           </Form>
         ) : data!.length >= 4 ? (
