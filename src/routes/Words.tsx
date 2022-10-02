@@ -15,6 +15,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import STitle from "../components/styles/STitle";
 import { useEffect } from "react";
+import WordCategories from "../components/WordCategories";
 
 export const WORDS_PATH = "/words";
 
@@ -83,9 +84,6 @@ const Words = () => {
   const { is_known, page, sort } = useParams();
 
   const userId = useRecoilValue(userIdVar);
-  const nav = useNavigate();
-  const { register, handleSubmit } = useForm<ITestForm>();
-  const [isTestBtnClick, setIsTestBtnClick] = useState(false);
 
   const { isLoading, data } = useQuery<IGetWord[]>(
     [`words-${is_known}-${page}`, userId],
@@ -97,112 +95,13 @@ const Words = () => {
     () => getCountWord(+userId!, is_known!)
   );
 
-  const onChange = (event: any) => {
-    const {
-      target: { value },
-    } = event;
-    console.log(is_known, value);
-
-    nav(`${WORDS_PATH}/1/${sort}/${value}`);
-  };
-
-  function shuffle(array: IGetWord[]) {
-    array.sort(() => Math.random() - 0.5);
-  }
-
-  const onQustionForTestClick = () => {
-    console.log(isTestBtnClick);
-
-    setIsTestBtnClick((prev) => !prev);
-  };
-
-  const onNextPageClick = (page: number) => {
-    nav(`${WORDS_PATH}/${page}/${sort}/${is_known}`, { replace: true });
-  };
-
-  const onTestClick = (formData: ITestForm) => {
-    const { count, target } = formData;
-
-    var tmp = data;
-    shuffle(tmp!);
-    const newWords = tmp!.slice(0, count);
-
-    if (target === "한국어") {
-      for (var i = 0; i < newWords.length; i++) {
-        const tmp = newWords[i].word;
-        newWords[i].word = newWords[i].mean;
-        newWords[i].mean = tmp;
-      }
-      nav("test", {
-        state: {
-          words: newWords,
-          target,
-        },
-      });
-    } else {
-      nav("test", {
-        state: {
-          words: newWords,
-          target,
-        },
-      });
-    }
-  };
-
   return (
     <Container title="Words">
       {isLoading ? (
         <Loading text="Loading..." />
       ) : (
         <Aaaa>
-          <Category>
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <SSelect defaultValue={"카테고리"} onChange={onChange}>
-                <>
-                  <option value={"카테고리"} disabled>
-                    카테고리
-                  </option>
-                  <option value={"all"}>전체</option>
-                  <option value={"false"}>모름</option>
-                  <option value={"true"}>앎</option>
-                </>
-              </SSelect>
-              {isTestBtnClick === true ? (
-                <Form onSubmit={handleSubmit(onTestClick)}>
-                  <SSelect defaultValue={0} {...register("count")}>
-                    <option disabled value={0}>
-                      문항 수
-                    </option>
-                    {Array.from(Array(data!.length - 4 + 1), (e, i) => (
-                      <option value={i + 4} key={i}>
-                        {e} {i + 4}
-                      </option>
-                    ))}
-                  </SSelect>
-
-                  <SSelect defaultValue={"언어"} {...register("target")}>
-                    <option disabled value={"언어"}>
-                      언어
-                    </option>
-                    <option value={"일본어"}>일본어</option>
-                    <option value={"한국어"}>한국어</option>
-                  </SSelect>
-                  <SButton>테스트 시작</SButton>
-                </Form>
-              ) : data!.length >= 4 ? (
-                <SButton onClick={onQustionForTestClick}>테스트</SButton>
-              ) : null}
-            </div>
-            <STitle>
-              {is_known === "all"
-                ? "모든 단어"
-                : is_known === "false"
-                ? "모르는 단어"
-                : "아는 단어"}
-            </STitle>
-
-            <div></div>
-          </Category>
+          <WordCategories data={data!} />
 
           {data!.length === 0 ? (
             <Loading text="저장되어 있는 단어가 없습니다" />
@@ -215,12 +114,10 @@ const Words = () => {
           )}
           <PageNav>
             {Array.from(Array(Math.floor((count - 1) / 10) + 1), (e, i) => (
-              <Page
-                isClick={+page! === i + 1}
-                onClick={() => onNextPageClick(i + 1)}
-                key={i}
-              >
-                {i + 1}
+              <Page isClick={+page! === i + 1} key={i}>
+                <Link to={`${WORDS_PATH}/${i + 1}/asc/${is_known}`}>
+                  {i + 1}
+                </Link>
               </Page>
             ))}
           </PageNav>
