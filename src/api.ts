@@ -2,12 +2,11 @@ import axios from "axios";
 // export const BASE_URL = "https://kissco-dic.herokuapp.com";
 export const BASE_URL = "http://localhost:8080";
 
-export const searchWord = async (source: string, word: string) => {
+export const searchWord = async (word: string) => {
   const new_url = `${BASE_URL}/api/vocas`;
 
   const response = await axios.get(new_url, {
     params: {
-      source,
       word,
     },
   });
@@ -15,15 +14,27 @@ export const searchWord = async (source: string, word: string) => {
   return response.data;
 };
 
-export const getCountWord = async (userId: number, isKnown: boolean) => {
+export const getCountWord = async (userId: number, isKnown: string) => {
   const new_url = `${BASE_URL}/api/users/vocas/cnt/${userId}`;
 
-  const response = await axios.get(new_url, {
-    params: {
-      isKnown: false,
-    },
-  });
-  return response.data;
+  if (isKnown === "all") {
+    const response = await axios.get(new_url);
+    console.log(response.data);
+
+    const { count } = response.data;
+    console.log(count);
+    return count;
+  } else {
+    const response = await axios.get(new_url, {
+      params: {
+        isKnown,
+      },
+    });
+    const { count } = response.data;
+    console.log(count);
+
+    return count;
+  }
 };
 
 export const getWords = async (
@@ -51,18 +62,12 @@ export const getWords = async (
   return response.data;
 };
 
-export const addVoca = async (
-  userId: number,
-  word: string,
-  mean: string,
-  source: string
-) => {
+export const addVoca = async (userId: number, word: string, mean: string) => {
   const new_url = `${BASE_URL}/api/vocas/${userId}`;
 
   const res = await axios.post(new_url, {
     word,
     mean,
-    source,
   });
 
   return res.data;

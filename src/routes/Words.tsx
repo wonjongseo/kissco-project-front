@@ -30,23 +30,36 @@ const Aaaa = styled.div`
 `;
 const Category = styled.div`
   padding-bottom: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between;
-
   span {
     font-size: 45px;
     font-weight: bold;
   }
 `;
-const NavButtons = styled.div`
-  position: fixed;
-  bottom: 50px;
+const PageNav = styled.ul`
+  width: 100%;
+  margin: 0 auto;
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-const NavButton = styled.h1``;
+const Page = styled.li<{ isClick?: boolean }>`
+  padding: 8px;
+  margin-left: 10px;
+
+  font-size: ${(p) => (p.isClick ? "22px" : "14px")};
+  color: ${(p) => (p.isClick ? "red" : "black")};
+
+  /* font-weight: ${(p) => (p.isClick ? "bold" : "600")}; */
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const Form = styled.form`
   margin-left: 11px;
   display: flex;
@@ -60,11 +73,6 @@ export interface IGetWord {
   word: string;
   mean: string;
   known: boolean;
-}
-
-interface IProps {
-  page: number;
-  sort: string;
 }
 
 interface ITestForm {
@@ -84,19 +92,18 @@ const Words = () => {
     () => getWords(+userId!, +page!, is_known!, "asc")
   );
 
-  const getVocaCnt = async () => {
-    // const cnt = await getCountWord(+userId!, is_known);
-    // console.log(cnt);
-  };
-  useEffect(() => {
-    getVocaCnt();
-  }, []);
+  const { isLoading: countLoading, data: count } = useQuery(
+    [`words-${is_known}-count`, userId],
+    () => getCountWord(+userId!, is_known!)
+  );
 
   const onChange = (event: any) => {
     const {
       target: { value },
     } = event;
-    nav(`${WORDS_PATH}/${page}/${sort}/${value}`);
+    console.log(is_known, value);
+
+    nav(`${WORDS_PATH}/1/${sort}/${value}`);
   };
 
   function shuffle(array: IGetWord[]) {
@@ -109,13 +116,10 @@ const Words = () => {
     setIsTestBtnClick((prev) => !prev);
   };
 
-  const onNextPageClick = () => {
-    nav(`${WORDS_PATH}/${+page! + 1}/${sort}/${is_known}`, { replace: true });
+  const onNextPageClick = (page: number) => {
+    nav(`${WORDS_PATH}/${page}/${sort}/${is_known}`, { replace: true });
   };
 
-  const onPrevPageClick = () => {
-    nav(`${WORDS_PATH}/${+page! - 1}/${sort}/${is_known}`, { replace: true });
-  };
   const onTestClick = (formData: ITestForm) => {
     const { count, target } = formData;
 
@@ -165,8 +169,8 @@ const Words = () => {
               </SSelect>
               {isTestBtnClick === true ? (
                 <Form onSubmit={handleSubmit(onTestClick)}>
-                  <SSelect defaultValue={-1} {...register("count")}>
-                    <option disabled value={-1}>
+                  <SSelect defaultValue={0} {...register("count")}>
+                    <option disabled value={0}>
                       문항 수
                     </option>
                     {Array.from(Array(data!.length - 4 + 1), (e, i) => (
@@ -196,37 +200,30 @@ const Words = () => {
                 ? "모르는 단어"
                 : "아는 단어"}
             </STitle>
-            {/* <Form>
-              <SInput placeholder="저장된 단어를 검색하시오" />
-              <SButton>검색</SButton>
-            </Form> */}
+
             <div></div>
           </Category>
 
-          <div>
-            {data!.length === 0 ? (
-              <Loading text="저장되어 있는 단어가 없습니다" />
-            ) : (
-              <div>
-                {data!.map((word, index) => (
-                  <Word
-                    source="ko"
-                    {...word}
-                    known={"" + word.known}
-                    key={index}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-          <NavButtons>
-            {+page! >= 2 && (
-              <SButton onClick={onPrevPageClick}>이전페이지</SButton>
-            )}
-            {data!.length >= 10 && (
-              <SButton onClick={onNextPageClick}>다음페이지</SButton>
-            )}
-          </NavButtons>
+          {data!.length === 0 ? (
+            <Loading text="저장되어 있는 단어가 없습니다" />
+          ) : (
+            <div>
+              {data!.map((word, index) => (
+                <Word {...word} known={"" + word.known} key={index} />
+              ))}
+            </div>
+          )}
+          <PageNav>
+            {Array.from(Array(Math.floor((count - 1) / 10) + 1), (e, i) => (
+              <Page
+                isClick={+page! === i + 1}
+                onClick={() => onNextPageClick(i + 1)}
+                key={i}
+              >
+                {i + 1}
+              </Page>
+            ))}
+          </PageNav>
         </Aaaa>
       )}
       <Routes>

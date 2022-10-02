@@ -14,14 +14,12 @@ export interface GetIWord {
   mean: string;
   id: number;
   known: string;
-  source: string;
 }
 
-const Form = styled.div`
-  margin-top: 11px;
+const WordContainer = styled.div`
+  padding-bottom: 25px;
   display: flex;
   align-items: center;
-  /* background-color: red; */
 `;
 
 const Word = (data: GetIWord) => {
@@ -45,7 +43,7 @@ const Word = (data: GetIWord) => {
   };
 
   return (
-    <Form>
+    <WordContainer>
       <SWord>
         <div>{data.word}</div>
         <div>{data.mean}</div>
@@ -67,7 +65,7 @@ const Word = (data: GetIWord) => {
       )}
 
       <SButton onClick={onDeleteClick}>삭제</SButton>
-    </Form>
+    </WordContainer>
   );
 };
 

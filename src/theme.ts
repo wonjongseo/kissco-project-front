@@ -14,7 +14,7 @@ export const moreThen1000: DefaultTheme = {
   select_font_size: "15px",
 
   input_padding: "8px 70px 8px 5px",
-  input_font_size: "20px",
+  input_font_size: "18px",
 };
 
 export const lessThen1000: DefaultTheme = {

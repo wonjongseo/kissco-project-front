@@ -8,11 +8,7 @@ import { LOGOUT_PATH } from "../routes/Logout";
 import { WORDS_PATH } from "../routes/Words";
 import { Helmet } from "react-helmet-async";
 import { BASE_URL } from "../api";
-const SContainer = styled.div`
-  height: 100vw;
-
-  /* background-color: blue; */
-`;
+const SContainer = styled.div``;
 const Sidebar = styled.div<{ width: number }>`
   position: fixed;
   padding: 0px 10px;
@@ -50,9 +46,9 @@ const NavButton = styled.span<{ width: number }>`
 `;
 
 const Content = styled.div<{ width: number }>`
-  height: 100vh;
   margin-left: ${(p) => (p.width <= 610 ? "5vw" : "20vw")};
   display: flex;
+  height: 100vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -71,7 +67,7 @@ const Container = ({ children, title }: IChildren) => {
   };
 
   return (
-    <SContainer>
+    <>
       <Helmet>
         <title>{title}</title>
       </Helmet>
@@ -108,7 +104,7 @@ const Container = ({ children, title }: IChildren) => {
       <Content width={width}>
         <>{children}</>
       </Content>
-    </SContainer>
+    </>
   );
 };
 

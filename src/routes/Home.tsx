@@ -15,9 +15,17 @@ import STitle from "../components/styles/STitle";
 interface InputedWord {
   word: string;
   mean: string;
-  source: string;
 }
 
+const Aaaaa = styled.div`
+  width: 100%;
+
+  /* flex-direction: column; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 150px;
+`;
 const Form = styled.form`
   display: flex;
   align-items: center;
@@ -25,19 +33,16 @@ const Form = styled.form`
 `;
 
 interface ISearch {
-  source: string;
   word: string;
 }
 
-const Aaaaa = styled.div`
-  height: 50vw;
-  background-color: red;
+const EmptyBox = styled.div`
+  height: 25vw;
 `;
 const Home = () => {
   const [word, setWord] = useState<InputedWord>({
     word: "",
     mean: "",
-    source: "",
   });
 
   const [isLoading, setIsLoading] = useState(false);
@@ -51,11 +56,10 @@ const Home = () => {
 
     setIsLoading(true);
 
-    const searchedMena = await searchWord(data.source, data.word);
+    const searchedMena = await searchWord(data.word);
     setWord({
       word: data.word,
       mean: searchedMena.mean,
-      source: data.source,
     });
 
     setIsLoading(false);
@@ -69,24 +73,21 @@ const Home = () => {
 
   return (
     <Container title="Home">
-      <STitle>단어 검색</STitle>
-      <Form onSubmit={handleSubmit(onValid)}>
-        <SSelect {...register("source")}>
-          <option value={"ko"}>한국어</option>
-          <option value={"ja"}>일본어</option>
-        </SSelect>
+      <Aaaaa>
+        <STitle>단어 검색</STitle>
+        <Form onSubmit={handleSubmit(onValid)}>
+          <SInput placeholder="단어를 입력해주세요." {...register("word")} />
 
-        <SInput placeholder="단어를 입력해주세요." {...register("word")} />
+          <SButton type={"submit"}>찾기</SButton>
+        </Form>
 
-        <SButton type={"submit"}>찾기</SButton>
-      </Form>
-
-      {isLoading ? (
-        <Loading text="Loading..." />
-      ) : word.word === "" ? null : (
-        <Search {...word} known={"false"} id={0} />
-      )}
-      <Aaaaa />
+        {isLoading ? (
+          <Loading text="Loading..." />
+        ) : word.word === "" ? null : (
+          <Search {...word} known={"false"} id={0} />
+        )}
+        <EmptyBox />
+      </Aaaaa>
     </Container>
   );
 };

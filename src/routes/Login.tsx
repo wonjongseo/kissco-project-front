@@ -18,16 +18,19 @@ const Title = styled.h1`
   font-weight: 700;
 `;
 
+const Aaaaa = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export interface ILoginForm {
   email: string;
   password: string;
   result?: string;
 }
 
-interface IState {
-  email?: string;
-  password?: string;
-}
 const Login = () => {
   const { state } = useLocation();
 
@@ -81,7 +84,6 @@ const Login = () => {
   return (
     <Container title="Login">
       <Title>로그인</Title>
-
       <AuthForm onSubmit={handleSubmit(onValid, onInvalid)}>
         {formState.errors.result && (
           <Error message={formState.errors.result?.message} />

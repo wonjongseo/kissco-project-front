@@ -24,7 +24,7 @@ const Search = (data: GetIWord) => {
   const { register, handleSubmit } = useForm<{ mean: string }>();
 
   const onSaveClick = async () => {
-    await addVoca(+userId!, data.word, data.mean, data.source);
+    await addVoca(+userId!, data.word, data.mean);
     nav(0);
   };
   const onCustomSaveClick = async ({ mean }: any) => {
@@ -48,7 +48,7 @@ const Search = (data: GetIWord) => {
                 placeholder="수정할 의미을 입력주세요."
               />
               <SButton onClick={() => setIsCustom(false)}>취소</SButton>
-              <SButton onClick={onCustomSaveClick}>저장2</SButton>
+              <SButton>저장</SButton>
             </form>
           ) : (
             <>
