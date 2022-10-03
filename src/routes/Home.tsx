@@ -19,12 +19,9 @@ interface InputedWord {
 
 const Aaaaa = styled.div`
   width: 100%;
-
-  /* flex-direction: column; */
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* padding-top: 150px; */
 `;
 const Form = styled.form`
   display: flex;
@@ -53,7 +50,6 @@ const Home = () => {
       setFocus("word");
       return;
     }
-
     setIsLoading(true);
 
     const searchedMena = await searchWord(data.word);
@@ -77,10 +73,8 @@ const Home = () => {
         <STitle>단어 검색</STitle>
         <Form onSubmit={handleSubmit(onValid)}>
           <SInput placeholder="단어를 입력해주세요." {...register("word")} />
-
           <SButton type={"submit"}>찾기</SButton>
         </Form>
-
         {isLoading ? (
           <Loading text="Loading..." />
         ) : word.word === "" ? null : (

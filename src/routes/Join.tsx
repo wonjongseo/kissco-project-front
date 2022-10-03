@@ -6,7 +6,6 @@ import { postJoin } from "../api/auth_api";
 import AuthButton from "../components/auth/AuthBotton";
 import AuthForm from "../components/auth/AuthForm";
 import AuthInput from "../components/auth/AuthInput";
-
 import Container from "../components/Container";
 import Error from "../components/Error";
 import { LOGIN_PATH } from "./Login";
@@ -27,9 +26,7 @@ export interface IJoinForm {
 const Join = () => {
   const nav = useNavigate();
   const { register, handleSubmit, formState, setError, setFocus } =
-    useForm<IJoinForm>({
-      // mode: "onBlur",
-    });
+    useForm<IJoinForm>();
 
   useEffect(() => {
     setFocus("email");
@@ -44,7 +41,6 @@ const Join = () => {
           shouldFocus: true,
         }
       );
-
       return;
     }
     try {

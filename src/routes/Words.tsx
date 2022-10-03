@@ -73,6 +73,7 @@ const Words = () => {
   );
 
   const loading = isLoading || countLoading;
+
   return (
     <Container title="Words">
       {loading ? (

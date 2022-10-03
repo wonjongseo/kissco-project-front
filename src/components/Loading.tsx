@@ -7,9 +7,9 @@ const Container = styled.div`
 `;
 
 interface IProps {
-  text: string;
+  text?: string;
 }
-const Loading = ({ text }: IProps) => {
+const Loading = ({ text = "Loading" }: IProps) => {
   return <Container>{text}</Container>;
 };
 

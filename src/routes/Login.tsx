@@ -18,13 +18,6 @@ const Title = styled.h1`
   font-weight: 700;
 `;
 
-const Aaaaa = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 export interface ILoginForm {
   email: string;
   password: string;
@@ -65,8 +58,6 @@ const Login = () => {
   const onInvalid = async (e: any) => {
     try {
       const { email, password } = getValues();
-
-      console.log(email, password);
 
       const response = await postLogin({ email, password });
       const data = response.data;

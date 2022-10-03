@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContinueContainer from "../components/ContinueContainer";
+import Loading from "../components/Loading";
 import SButton from "../components/styles/SButton";
 import SInput from "../components/styles/SInput";
 import SContainer from "../components/test/SContainer";
@@ -47,14 +48,15 @@ interface IForm {
 const SubjectiveTestPage = () => {
   const nav = useNavigate();
   const { words } = useLocation().state as IState;
-  const [tmp, setTmp] = useState<IGetWord[]>([]);
   const { register, handleSubmit, setFocus, setValue } = useForm<IForm>();
 
-  const [isFinish, setIsFinish] = useState(false);
+  const [tmp, setTmp] = useState<IGetWord[]>([]);
   const [wrongs, setWrongs] = useState<IGetWord[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [index, setIndex] = useState(0);
   useEffect(() => {
     setTmp(words);
+    setIsLoading(false);
   }, []);
 
   const onChangeLanguageClick = () => {
@@ -89,40 +91,47 @@ const SubjectiveTestPage = () => {
       } else {
         setWrongs((prev) => [words[index], ...prev]);
       }
-
-      setIsFinish(true);
     }
     setValue("answer", "");
   };
   return (
-    <SContainer>
-      <TopButtonContainer>
-        <SButton onClick={onChangeLanguageClick}>언어 바꾸기</SButton>
-        <SButton onClick={onPrevClick}>나가기</SButton>
-      </TopButtonContainer>
-      <SInnerContainer>
-        {index < words.length ? (
-          <>
-            <SQuestionContainer>
-              <SQuestion>{words[index].mean}</SQuestion>
-            </SQuestionContainer>
-            <Form onSubmit={handleSubmit(onNextClick)}>
-              <SInput {...register("answer")} placeholder="정답을 입력하시오" />
-              <Button>Next</Button>
-            </Form>
-          </>
-        ) : (
-          <div>
-            <ContinueContainer
-              wrongs={wrongs}
-              totalCnt={tmp.length}
-              setIndex={setIndex}
-              setWrongs={setWrongs}
-            />
-          </div>
-        )}
-      </SInnerContainer>
-    </SContainer>
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <SContainer>
+          <TopButtonContainer>
+            <SButton onClick={onChangeLanguageClick}>언어 바꾸기</SButton>
+            <SButton onClick={onPrevClick}>나가기</SButton>
+          </TopButtonContainer>
+          <SInnerContainer>
+            {index < words.length ? (
+              <>
+                <SQuestionContainer>
+                  <SQuestion>{words[index].mean}</SQuestion>
+                </SQuestionContainer>
+                <Form onSubmit={handleSubmit(onNextClick)}>
+                  <SInput
+                    {...register("answer")}
+                    placeholder="정답을 입력하시오"
+                  />
+                  <Button>Next</Button>
+                </Form>
+              </>
+            ) : (
+              <div>
+                <ContinueContainer
+                  wrongs={wrongs}
+                  totalCnt={tmp.length}
+                  setIndex={setIndex}
+                  setWrongs={setWrongs}
+                />
+              </div>
+            )}
+          </SInnerContainer>
+        </SContainer>
+      )}
+    </>
   );
 };
 export default SubjectiveTestPage;

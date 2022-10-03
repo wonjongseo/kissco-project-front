@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContinueContainer from "../components/ContinueContainer";
+import Loading from "../components/Loading";
 import SButton from "../components/styles/SButton";
 import SQuestion from "../components/test/SQuestion";
 import { IGetWord } from "./Words";
@@ -84,6 +85,7 @@ const TestPage = () => {
   const [wrongs, setWrongs] = useState<IGetWord[]>([]);
   const [index, setIndex] = useState(0);
   const [collections, setCollections] = useState<IGetWord[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setNewWords(words);
@@ -102,6 +104,7 @@ const TestPage = () => {
     if (tmp.indexOf(words[0]) === -1) tmp[collectIndex] = words[0];
 
     setCollections(tmp);
+    setIsLoading(false);
   }, []);
   const onPrevClick = () => {
     nav(-1);
@@ -148,33 +151,39 @@ const TestPage = () => {
   };
 
   return (
-    <Container>
-      <TopButtonContainer>
-        <SButton onClick={onChangeLanguageClick}>언어 바꾸기</SButton>
-        <SButton onClick={onPrevClick}>나가기</SButton>
-      </TopButtonContainer>
-      <InnerContainer>
-        {index !== words.length ? (
-          <QuestionContainer>
-            <SQuestion>{words[index].mean}</SQuestion>
-            <MeanBox>
-              {collections.map((mean, index) => (
-                <Button onClick={() => onNextClick(mean.word)} key={index}>
-                  {mean.word}
-                </Button>
-              ))}
-            </MeanBox>
-          </QuestionContainer>
-        ) : (
-          <ContinueContainer
-            wrongs={wrongs}
-            totalCnt={newWords.length}
-            setIndex={setIndex}
-            setWrongs={setWrongs}
-          />
-        )}
-      </InnerContainer>
-    </Container>
+    <>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Container>
+          <TopButtonContainer>
+            <SButton onClick={onChangeLanguageClick}>언어 바꾸기</SButton>
+            <SButton onClick={onPrevClick}>나가기</SButton>
+          </TopButtonContainer>
+          <InnerContainer>
+            {index !== words.length ? (
+              <QuestionContainer>
+                <SQuestion>{words[index].mean}</SQuestion>
+                <MeanBox>
+                  {collections.map((mean, index) => (
+                    <Button onClick={() => onNextClick(mean.word)} key={index}>
+                      {mean.word}
+                    </Button>
+                  ))}
+                </MeanBox>
+              </QuestionContainer>
+            ) : (
+              <ContinueContainer
+                wrongs={wrongs}
+                totalCnt={newWords.length}
+                setIndex={setIndex}
+                setWrongs={setWrongs}
+              />
+            )}
+          </InnerContainer>
+        </Container>
+      )}
+    </>
   );
 };
 
