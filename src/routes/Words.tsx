@@ -1,21 +1,15 @@
 import { useQuery } from "react-query";
-import { Link, Route, Routes, useNavigate, useParams } from "react-router-dom";
+import { Link, Route, Routes, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getCountWord, getWords } from "../api";
-import SButton from "../components/styles/SButton";
-import SInput from "../components/styles/SInput";
-import SSelect from "../components/styles/SSelect";
 import Container from "../components/Container";
 import Loading from "../components/Loading";
 import Word from "../components/Word";
 import { useRecoilValue } from "recoil";
 import { userIdVar } from "../atoms";
 import TestPage from "./TestPage";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import STitle from "../components/styles/STitle";
-import { useEffect } from "react";
 import WordCategories from "../components/WordCategories";
+import SubjectiveTestPage from "./SubjectiveTestPage";
 
 export const WORDS_PATH = "/words";
 
@@ -26,22 +20,12 @@ const Aaaa = styled.div`
   align-items: flex-start;
   padding-top: 150px;
   height: 100vh;
+`;
 
-  /* background-color: red; */
-`;
-const Category = styled.div`
-  padding-bottom: 20px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: space-between;
-  span {
-    font-size: 45px;
-    font-weight: bold;
-  }
-`;
 const PageNav = styled.ul`
-  width: 100%;
+  position: fixed;
+  bottom: 100px;
+  /* background-color: red; */
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -55,20 +39,11 @@ const Page = styled.li<{ isClick?: boolean }>`
   font-size: ${(p) => (p.isClick ? "22px" : "14px")};
   color: ${(p) => (p.isClick ? "red" : "black")};
 
-  /* font-weight: ${(p) => (p.isClick ? "bold" : "600")}; */
   &:hover {
     cursor: pointer;
   }
 `;
 
-const Form = styled.form`
-  margin-left: 11px;
-  display: flex;
-  align-items: center;
-  select {
-    margin-left: 5px;
-  }
-`;
 export interface IGetWord {
   id: number;
   word: string;
@@ -97,9 +72,10 @@ const Words = () => {
     () => getCountWord(+userId!, is_known!)
   );
 
+  const loading = isLoading || countLoading;
   return (
     <Container title="Words">
-      {isLoading ? (
+      {loading ? (
         <Loading text="Loading..." />
       ) : (
         <Aaaa>
@@ -127,6 +103,7 @@ const Words = () => {
       )}
       <Routes>
         <Route path="test" element={<TestPage />} />
+        <Route path="subjective-test" element={<SubjectiveTestPage />} />
       </Routes>
     </Container>
   );

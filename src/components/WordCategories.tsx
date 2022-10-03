@@ -47,8 +47,6 @@ const WordCategories = ({ data }: IProps) => {
       target: { value },
     } = event;
 
-    console.log(value);
-
     nav(`${WORDS_PATH}/1/${sort}/${value}`);
   };
 
@@ -59,7 +57,8 @@ const WordCategories = ({ data }: IProps) => {
     return newArray;
   }
   const onTestClick = (formData: ITestForm) => {
-    const { count, target } = formData;
+    const { count } = formData;
+    console.log(count);
 
     const shuffledWords = shuffle(data!);
     const newWords = shuffledWords!.slice(0, count);
@@ -67,7 +66,16 @@ const WordCategories = ({ data }: IProps) => {
     nav("test", {
       state: {
         words: newWords,
-        target,
+      },
+    });
+  };
+
+  const onSubjectiveTestClick = () => {
+    const newWords = shuffle(data!);
+
+    nav("subjective-test", {
+      state: {
+        words: newWords,
       },
     });
   };
@@ -97,13 +105,15 @@ const WordCategories = ({ data }: IProps) => {
               ))}
             </SSelect>
 
-            <SButton>테스트 시작</SButton>
+            <SButton>시작</SButton>
           </Form>
         ) : data!.length >= 4 ? (
           <SButton onClick={() => setIsTestBtnClick((prev) => !prev)}>
             테스트
           </SButton>
-        ) : null}
+        ) : (
+          <SButton onClick={onSubjectiveTestClick}>테스트</SButton>
+        )}
       </div>
       <STitle>
         {is_known === "all"

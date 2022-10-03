@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ContinueContainer from "../components/ContinueContainer";
 import SButton from "../components/styles/SButton";
-import SWord from "../components/styles/SWord";
+import SQuestion from "../components/test/SQuestion";
 import { IGetWord } from "./Words";
 
 const Container = styled.div`
@@ -27,17 +27,6 @@ const QuestionContainer = styled.div`
   justify-content: center;
 `;
 
-const SButtons = styled.button`
-  background-color: #a5f1e9;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  font-size: ${(p) => p.theme.button_font_size};
-  padding: ${(p) => p.theme.button_padding};
-  box-shadow: 1px 1px 1px;
-  &:hover {
-    cursor: pointer;
-  }
-`;
 const Button = styled.div`
   background-color: #a5f1e9;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -87,16 +76,33 @@ const TopButtonContainer = styled.div`
 
 interface IState {
   words: IGetWord[];
-  target: string;
 }
 const TestPage = () => {
   const nav = useNavigate();
-  const { words, target } = useLocation().state as IState;
-  const [tmp, setTmp] = useState<IGetWord[]>([]);
+  const { words } = useLocation().state as IState;
+  const [newWords, setNewWords] = useState<IGetWord[]>([]);
+  const [wrongs, setWrongs] = useState<IGetWord[]>([]);
   const [index, setIndex] = useState(0);
   const [collections, setCollections] = useState<IGetWord[]>([]);
-  const [wrongs, setWrongs] = useState<IGetWord[]>([]);
 
+  useEffect(() => {
+    setNewWords(words);
+    const tmp = [] as IGetWord[];
+    for (var i = 0; i < 4; i++) {
+      const selectionWord = words[Math.floor(Math.random() * words.length)];
+
+      if (tmp.indexOf(selectionWord) === -1) {
+        tmp.push(selectionWord);
+      } else {
+        --i;
+      }
+    }
+
+    var collectIndex = Math.floor(Math.random() * 4);
+    if (tmp.indexOf(words[0]) === -1) tmp[collectIndex] = words[0];
+
+    setCollections(tmp);
+  }, []);
   const onPrevClick = () => {
     nav(-1);
   };
@@ -131,7 +137,7 @@ const TestPage = () => {
   };
 
   const onChangeLanguageClick = () => {
-    setTmp((prev) => {
+    setNewWords((prev) => {
       return prev.map((word) => {
         const ttmp = word.mean;
         word.mean = word.word;
@@ -140,24 +146,6 @@ const TestPage = () => {
       });
     });
   };
-  useEffect(() => {
-    setTmp(words);
-    const tmp = [] as IGetWord[];
-    for (var i = 0; i < 4; i++) {
-      const selectionWord = words[Math.floor(Math.random() * words.length)];
-
-      if (tmp.indexOf(selectionWord) === -1) {
-        tmp.push(selectionWord);
-      } else {
-        --i;
-      }
-    }
-
-    var collectIndex = Math.floor(Math.random() * 4);
-    if (tmp.indexOf(words[0]) === -1) tmp[collectIndex] = words[0];
-
-    setCollections(tmp);
-  }, []);
 
   return (
     <Container>
@@ -166,9 +154,9 @@ const TestPage = () => {
         <SButton onClick={onPrevClick}>나가기</SButton>
       </TopButtonContainer>
       <InnerContainer>
-        {index !== tmp.length ? (
+        {index !== words.length ? (
           <QuestionContainer>
-            <Question>{tmp[index].mean}</Question>
+            <SQuestion>{words[index].mean}</SQuestion>
             <MeanBox>
               {collections.map((mean, index) => (
                 <Button onClick={() => onNextClick(mean.word)} key={index}>
@@ -180,7 +168,7 @@ const TestPage = () => {
         ) : (
           <ContinueContainer
             wrongs={wrongs}
-            totalCnt={tmp.length}
+            totalCnt={newWords.length}
             setIndex={setIndex}
             setWrongs={setWrongs}
           />

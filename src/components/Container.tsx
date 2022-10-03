@@ -8,7 +8,6 @@ import { LOGOUT_PATH } from "../routes/Logout";
 import { WORDS_PATH } from "../routes/Words";
 import { Helmet } from "react-helmet-async";
 import { BASE_URL } from "../api";
-const SContainer = styled.div``;
 const Sidebar = styled.div<{ width: number }>`
   position: fixed;
   padding: 0px 10px;
@@ -31,6 +30,7 @@ const Title = styled.span<{ width: number }>`
 const Seperator = styled.div`
   margin: 40px 0;
   width: 100%;
+  box-shadow: 1px 1px 3px;
   height: 1px;
   background-color: rgba(0, 0, 0, 0.2);
 `;

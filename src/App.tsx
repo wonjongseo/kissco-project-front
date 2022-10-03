@@ -24,7 +24,7 @@ function App() {
   });
   return (
     <HelmetProvider>
-      <ThemeProvider theme={+width >= 1000 ? moreThen1000 : lessThen1000}>
+      <ThemeProvider theme={+width < 600 ? lessThen1000 : moreThen1000}>
         <GlobalStyles />
         <Routers />
       </ThemeProvider>

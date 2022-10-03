@@ -14,6 +14,10 @@ declare module "styled-components" {
 
     input_padding: string;
     input_font_size: string;
+
+    test_font_size: string;
+    test_title_font_size: string;
+    test_continue_font_size: string;
     // bgColor: string;
     // accentColor: string;
   }

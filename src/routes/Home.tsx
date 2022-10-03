@@ -24,7 +24,7 @@ const Aaaaa = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 150px;
+  /* padding-top: 150px; */
 `;
 const Form = styled.form`
   display: flex;

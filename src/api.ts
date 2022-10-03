@@ -19,10 +19,8 @@ export const getCountWord = async (userId: number, isKnown: string) => {
 
   if (isKnown === "all") {
     const response = await axios.get(new_url);
-    console.log(response.data);
 
     const { count } = response.data;
-    console.log(count);
     return count;
   } else {
     const response = await axios.get(new_url, {
@@ -31,7 +29,6 @@ export const getCountWord = async (userId: number, isKnown: string) => {
       },
     });
     const { count } = response.data;
-    console.log(count);
 
     return count;
   }
@@ -101,6 +98,24 @@ export const changeIsKnown = async (
 ) => {
   const new_url = `${BASE_URL}/api/users/vocas/${vocaId}/${userId}?isKnown=${isKnown}`;
   const response = await axios.post(new_url);
+
+  return response.data;
+};
+
+export const getTestVocas = async (userId: number, isKnown: string) => {
+  const new_url = `${BASE_URL}/api/uses/vocas/test/${userId}`;
+  var response;
+  if (isKnown === "all") {
+    response = await axios.get(new_url);
+  } else {
+    response = await axios.get(new_url, {
+      params: { isKnown },
+    });
+  }
+
+  console.log("test all");
+
+  console.log(response.data);
 
   return response.data;
 };
