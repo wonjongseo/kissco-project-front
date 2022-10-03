@@ -1,6 +1,6 @@
 import axios from "axios";
-// export const BASE_URL = "https://kissco-dic.herokuapp.com";
-export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "https://kissco-dic.herokuapp.com";
+// export const BASE_URL = "http://localhost:8080";
 
 export const searchWord = async (word: string) => {
   const new_url = `${BASE_URL}/api/vocas`;
