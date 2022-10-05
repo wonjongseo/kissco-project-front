@@ -1,14 +1,13 @@
-import { windowWidthVar } from "./atoms";
-import { useRecoilValue } from "recoil";
 import { DefaultTheme } from "styled-components";
 
 export const moreThen1000: DefaultTheme = {
+  word_size: "220px",
   sidebar: "20vw",
   text_size: "38px",
   title_size: "50px",
   title_font_weight: "700",
   button_font_size: "15px",
-  button_padding: "8px 16px;",
+  button_padding: "8px 16px",
 
   select_padding: "7px 14px",
   select_font_size: "15px",
@@ -23,6 +22,7 @@ export const moreThen1000: DefaultTheme = {
 };
 
 export const lessThen1000: DefaultTheme = {
+  word_size: "120px",
   sidebar: "0",
   text_size: "19px",
   title_size: "20px",

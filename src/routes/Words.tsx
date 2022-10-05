@@ -14,28 +14,28 @@ import SubjectiveTestPage from "./SubjectiveTestPage";
 export const WORDS_PATH = "/words";
 
 const Aaaa = styled.div`
-  width: 70vw;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding-top: 150px;
-  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 50vw;
+  height: 100%;
+  grid-template-rows: 1.5fr 5fr 0.5fr;
 `;
-
 const PageNav = styled.ul`
-  position: fixed;
-  bottom: 100px;
-  /* background-color: red; */
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+
+  padding-bottom: 50px;
 `;
 
 const Page = styled.li<{ isClick?: boolean }>`
-  padding: 8px;
-  margin-left: 10px;
-
+  a {
+    padding: 10px;
+    width: 50%;
+  }
+  margin-left: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: ${(p) => (p.isClick ? "22px" : "14px")};
   color: ${(p) => (p.isClick ? "red" : "black")};
 
@@ -61,7 +61,6 @@ const Words = () => {
   const { is_known, page, sort } = useParams();
 
   const userId = useRecoilValue(userIdVar);
-
   const { isLoading, data } = useQuery<IGetWord[]>(
     [`words-${is_known}-${page}`, userId],
     () => getWords(+userId!, +page!, is_known!, "asc")

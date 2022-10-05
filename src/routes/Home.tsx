@@ -5,10 +5,8 @@ import { searchWord } from "../api";
 import SButton from "../components/styles/SButton";
 import SInput from "../components/styles/SInput";
 import Container from "../components/Container";
-import SSelect from "../components/styles/SSelect";
 import Loading from "../components/Loading";
 import Search from "../components/Search";
-import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
 import STitle from "../components/styles/STitle";
 
@@ -43,6 +41,7 @@ const Home = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isNotFound, setIsNotFound] = useState(false);
   const { register, handleSubmit, setFocus, setValue } = useForm<ISearch>();
 
   const onValid = async (data: ISearch) => {
@@ -53,6 +52,16 @@ const Home = () => {
     setIsLoading(true);
 
     const searchedMena = await searchWord(data.word);
+
+    // if (searchedMena.mean === data.word) {
+    //   console.log("aaa");
+
+    //   setIsLoading(false);
+    //   setFocus("word");
+    //   setIsNotFound(true);
+    //   return;
+    // }
+
     setWord({
       word: data.word,
       mean: searchedMena.mean,
@@ -66,6 +75,7 @@ const Home = () => {
   useEffect(() => {
     setFocus("word");
   }, []);
+  console.log(isNotFound);
 
   return (
     <Container title="Home">

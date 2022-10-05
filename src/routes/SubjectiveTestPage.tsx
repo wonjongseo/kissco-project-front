@@ -21,7 +21,6 @@ const Button = styled.button`
   border-radius: 10px;
   font-size: ${(p) => p.theme.button_font_size};
   padding: ${(p) => p.theme.button_padding};
-  /* padding: 1 ; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +33,6 @@ const Button = styled.button`
 `;
 const TopButtonContainer = styled.div`
   display: flex;
-
   margin-top: 15px;
   margin-right: 15px;
 `;

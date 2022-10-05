@@ -64,22 +64,10 @@ const Join = () => {
     <Container title="Join">
       <Title>회원가입</Title>
       <AuthForm onSubmit={handleSubmit(onValid)}>
-        {formState.errors && (
-          <>
-            {formState.errors.result && (
-              <Error message={formState.errors.result?.message} />
-            )}
-            {formState.errors.email && (
-              <Error message={formState.errors.email?.message} />
-            )}
-            {formState.errors.password && (
-              <Error message={formState.errors.password?.message} />
-            )}
-            {formState.errors.username && (
-              <Error message={formState.errors.username?.message} />
-            )}
-          </>
+        {formState.errors.result && (
+          <Error message={formState.errors.result?.message} />
         )}
+
         <AuthInput
           {...register("email", {
             required: "이메일을 입력해주세요",
@@ -90,6 +78,10 @@ const Join = () => {
           })}
           placeholder="email"
         />
+
+        {formState.errors.email && (
+          <Error message={formState.errors.email?.message} />
+        )}
         <AuthInput
           type={"password"}
           {...register("password", {
@@ -101,6 +93,9 @@ const Join = () => {
           })}
           placeholder="password"
         />
+        {formState.errors.password && (
+          <Error message={formState.errors.password?.message} />
+        )}
         <AuthInput
           type={"password"}
           {...register("password2")}
@@ -116,6 +111,9 @@ const Join = () => {
           })}
           placeholder="username"
         />
+        {formState.errors.username && (
+          <Error message={formState.errors.username?.message} />
+        )}
         <AuthButton>회원가입</AuthButton>
       </AuthForm>
     </Container>

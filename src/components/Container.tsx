@@ -49,6 +49,7 @@ const Content = styled.div<{ width: number }>`
   margin-left: ${(p) => (p.width <= 610 ? "5vw" : "20vw")};
   display: flex;
   height: 100vh;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -77,6 +78,9 @@ const Container = ({ children, title }: IChildren) => {
         </Title>
 
         <Seperator />
+        <NavButton width={width}>
+          <Link to={"/"}>단어 검색</Link>
+        </NavButton>
         {userId !== null ? (
           <>
             <NavButton width={width}>
@@ -86,7 +90,6 @@ const Container = ({ children, title }: IChildren) => {
               다운로드
             </NavButton>
             <NavButton width={width}>
-              {/* 로그아웃 */}
               <Link to={LOGOUT_PATH}>로그아웃</Link>
             </NavButton>
           </>

@@ -2,6 +2,7 @@ import "styled-components";
 
 declare module "styled-components" {
   export interface DefaultTheme {
+    word_size: string;
     sidebar: string;
     text_size: string;
     title_size: string;

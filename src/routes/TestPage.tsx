@@ -70,7 +70,6 @@ const MeanBox = styled.div`
 
 const TopButtonContainer = styled.div`
   display: flex;
-
   margin-top: 15px;
   margin-right: 15px;
 `;
@@ -162,23 +161,30 @@ const TestPage = () => {
           </TopButtonContainer>
           <InnerContainer>
             {index !== words.length ? (
-              <QuestionContainer>
-                <SQuestion>{words[index].mean}</SQuestion>
-                <MeanBox>
-                  {collections.map((mean, index) => (
-                    <Button onClick={() => onNextClick(mean.word)} key={index}>
-                      {mean.word}
-                    </Button>
-                  ))}
-                </MeanBox>
-              </QuestionContainer>
+              <>
+                <QuestionContainer>
+                  <SQuestion>{words[index].mean}</SQuestion>
+                  <MeanBox>
+                    {collections.map((mean, index) => (
+                      <Button
+                        onClick={() => onNextClick(mean.word)}
+                        key={index}
+                      >
+                        {mean.word}
+                      </Button>
+                    ))}
+                  </MeanBox>
+                </QuestionContainer>
+              </>
             ) : (
-              <ContinueContainer
-                wrongs={wrongs}
-                totalCnt={newWords.length}
-                setIndex={setIndex}
-                setWrongs={setWrongs}
-              />
+              <div>
+                <ContinueContainer
+                  wrongs={wrongs}
+                  totalCnt={newWords.length}
+                  setIndex={setIndex}
+                  setWrongs={setWrongs}
+                />
+              </div>
             )}
           </InnerContainer>
         </Container>

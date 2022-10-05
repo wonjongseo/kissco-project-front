@@ -20,8 +20,8 @@ const Form = styled.form`
   }
 `;
 const Category = styled.div`
-  padding-bottom: 20px;
-  margin-bottom: 30px;
+  /* padding-bottom: 20px; */
+  margin-bottom: 50px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between;

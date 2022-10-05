@@ -15,7 +15,7 @@ const ContinueBox = styled.div`
 
 const ReTryBox = styled.div`
   width: 100%;
-  margin-left: 20px;
+  margin-left: 80px;
 `;
 
 const WrongWordBox = styled.ul`
@@ -65,7 +65,6 @@ const ContinueContainer = ({
   setIndex,
   setWrongs,
 }: IProps) => {
-  const [newWords, setNewWords] = useState<IGetWord[]>([]);
   function shuffle(array: IGetWord[]) {
     const newArray = array.slice();
     newArray.sort(() => Math.random() - 0.5);
@@ -151,7 +150,9 @@ const ContinueContainer = ({
                 </SWord>
               ))}
               <Bbbb>
-                <div>틀리신 문제를 다시 보시겠습니까? </div>
+                <div>
+                  <Bbbb>틀리신 문제를 다시 보시겠습니까?</Bbbb>
+                </div>
                 <div>
                   <SButton onClick={onSubjectiveTestClick}>네</SButton>
                   <SButton onClick={onPrevClick}>아니요</SButton>
