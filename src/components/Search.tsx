@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useForm, UseFormSetFocus } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { addCustomVoca, addVoca } from "../api";
@@ -9,7 +9,6 @@ import Loading from "./Loading";
 import SButton from "./styles/SButton";
 import SInput from "./styles/SInput";
 import SWord from "./styles/SWord";
-import { GetIWord } from "./Word";
 
 const Container = styled.div`
   margin-top: 22px;
@@ -17,18 +16,42 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const Search = (data: GetIWord) => {
-  const userId = useRecoilValue(userIdVar);
+interface GetIWord {
+  word: string;
+  mean: string;
+  id: number;
+  known: string;
+  searchWordFocus?: any;
+}
 
-  console.log(data);
+const Search = (data: GetIWord) => {
+  const location = useLocation();
+  console.log(location);
+
+  const userId = useRecoilValue(userIdVar);
 
   const nav = useNavigate();
   const [isCustom, setIsCustom] = useState(false);
-  const { register, handleSubmit } = useForm<{ mean: string }>();
+  const { register, setValue, handleSubmit, formState, setError, setFocus } =
+    useForm<{
+      mean: string;
+      result?: string;
+    }>();
   const [isNotFound, setIsNotFound] = useState(false);
   const onSaveClick = async () => {
-    await addVoca(+userId!, data.word, data.mean);
-    nav(0);
+    try {
+      await addVoca(+userId!, data.word, data.mean);
+
+      nav(0);
+    } catch (error: any) {
+      setError("result", {
+        message: error.response.data.message,
+      });
+
+      data.searchWordFocus!("word", {
+        shouldSelect: true,
+      });
+    }
   };
   const onCustomSaveClick = async ({ mean }: any) => {
     await addCustomVoca(+userId!, data.word, mean);
@@ -36,8 +59,6 @@ const Search = (data: GetIWord) => {
     nav(0);
   };
   useEffect(() => {
-    console.log(data.mean.includes(data.word));
-
     if (data.mean.includes(data.word)) {
       setIsNotFound(true);
     }
@@ -47,13 +68,17 @@ const Search = (data: GetIWord) => {
       <>
         {isNotFound ? (
           <Loading text={`${data.word} 를 찾을 수 없습니다.`} />
+        ) : formState?.errors?.result ? (
+          <Loading text={`${formState?.errors?.result?.message} .`} />
         ) : (
-          <SWord>
-            {data.word} {data.mean}
-          </SWord>
+          <>
+            <SWord>
+              {data.word} {data.mean}
+            </SWord>
+          </>
         )}
       </>
-      {userId !== null && !isNotFound ? (
+      {userId !== null && !isNotFound && !formState?.errors?.result ? (
         <>
           {isCustom ? (
             <form onSubmit={handleSubmit(onCustomSaveClick)}>

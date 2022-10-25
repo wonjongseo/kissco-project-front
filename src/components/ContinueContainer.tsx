@@ -19,20 +19,20 @@ const ReTryBox = styled.div`
 `;
 
 const WrongWordBox = styled.ul`
-  font-size: 20px;
+  font-size: 18px;
   height: 100%;
   width: 100%;
   h1 {
     font-size: ${(p) => p.theme.test_title_font_size};
     color: red;
-    margin: 100px 0px 40px 0px;
+    margin: 80px 0px 40px 0px;
   }
   ${SWord} {
     margin: 20px 0px;
     font-size: 25px;
   }
   p {
-    margin-top: 80px;
+    margin-top: 70px;
     font-size: 20px;
     display: flex;
     align-items: center;

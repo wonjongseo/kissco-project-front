@@ -20,8 +20,7 @@ const Form = styled.form`
   }
 `;
 const Category = styled.div`
-  /* padding-bottom: 20px; */
-  margin-bottom: 50px;
+  height: 150px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: flex;
   justify-content: space-between;
@@ -57,9 +56,10 @@ const WordCategories = ({ data }: IProps) => {
     return newArray;
   }
   const onTestClick = (formData: ITestForm) => {
-    const { count } = formData;
-    console.log(count);
+    console.log(formData);
 
+    const { count } = formData;
+    if (count == 0) return;
     const shuffledWords = shuffle(data!);
     const newWords = shuffledWords!.slice(0, count);
 

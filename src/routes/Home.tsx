@@ -88,7 +88,7 @@ const Home = () => {
         {isLoading ? (
           <Loading text="Loading..." />
         ) : word.word === "" ? null : (
-          <Search {...word} known={"false"} id={0} />
+          <Search {...word} known={"false"} id={0} searchWordFocus={setFocus} />
         )}
         <EmptyBox />
       </Aaaaa>

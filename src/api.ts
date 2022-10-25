@@ -62,12 +62,19 @@ export const getWords = async (
 export const addVoca = async (userId: number, word: string, mean: string) => {
   const new_url = `${BASE_URL}/api/vocas/${userId}`;
 
-  const res = await axios.post(new_url, {
-    word,
-    mean,
-  });
+  try {
+    const res = await axios.post(new_url, {
+      word,
+      mean,
+    });
+    console.log(res);
 
-  return res.data;
+    return res;
+  } catch (error) {
+    console.log("addVoca");
+
+    throw error;
+  }
 };
 
 export const addCustomVoca = async (
@@ -77,11 +84,12 @@ export const addCustomVoca = async (
 ) => {
   const new_url = `${BASE_URL}/api/vocas/my/${userId}`;
 
-  await axios.post(new_url, {
+  const data = await axios.post(new_url, {
     word,
     mean,
     source: "ko",
   });
+  console.log(data);
 };
 export const deleteVoca = async (vocaId: number, userId: number) => {
   const new_url = `${BASE_URL}/api/vocas/${vocaId}/${userId}`;
